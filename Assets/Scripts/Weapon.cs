@@ -52,7 +52,13 @@ public class Weapon : MonoBehaviour
         {
             canShot = false;
             {
-                Destroy(currntNearest.transform.gameObject);
+                if (currntNearest.TryGetComponent<EnemyHP>(out EnemyHP enemy))
+                {
+                    umm.CritRoller();
+                    if (!umm.CanCrit) { enemy.TakeDMG(umm.Damage); Debug.Log("did not"); }
+                    else if (umm.CanCrit) { enemy.TakeDMG(umm.Damage * Mathf.Pow(umm.CritDMG, umm.CritNumber)); Debug.Log("did"); }
+                    Debug.Log(umm.Damage * Mathf.Pow(umm.CritDMG, umm.CritNumber));
+                }
             }
             line.SetPosition(0, new Vector3(0f, 2.5f, 0f));
             line.SetPosition(1, currntNearest.transform.position);

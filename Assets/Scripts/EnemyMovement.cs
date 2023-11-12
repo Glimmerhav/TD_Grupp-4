@@ -12,15 +12,25 @@ public class EnemyMovement : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
-        //agent.autoBraking = true;
-        Debug.Log(player.transform.position);
+        SetTarget();
     }
 
-    private void Update()
+    private void FixedUpdate()
+    {
+        Destroy();
+    }
+    void SetTarget()
     {
         if (player == null) { return; }
 
         agent.SetDestination(player.transform.position);
+    }
+    private void Destroy()
+    {
+        if (Vector3.Distance(player.transform.position, this.transform.position) >= 60f)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
